@@ -1,0 +1,4 @@
+# Text files
+*.txt
+# Python bytecode
+*.pyc
