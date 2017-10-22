@@ -19,13 +19,6 @@ def pickleDictionary(dict,file):
         cPickle.dump(dict,f)
     f.close()
 
-def unpickleDictionary(file):
-    with open(file,'rb') as f:
-        retrievedDict = cPickle.load(f)
-    f.close()
-
-    return retrievedDict
-
 def index_doc(file):
     doc = {}
     no_of_words = 0
