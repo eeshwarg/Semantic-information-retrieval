@@ -6,14 +6,6 @@ from collections import defaultdict
 import os
 import math
 
-input_dir = argv[1]
-
-tf_in_docs = {}
-tf_idf = {}
-df = defaultdict(int)
-
-tokenizer = RegexpTokenizer(r'\w+')
-
 def pickleDictionary(dict,file):
     with open(file,'wb') as f:
         cPickle.dump(dict,f)
@@ -38,20 +30,29 @@ def index_doc(file):
 
     tf_in_docs[file] = doc
 
-for file in os.listdir(input_dir):
-    if file.endswith(".txt"):
-        index_doc(file)
+if __name__ == '__main__':        
+    input_dir = argv[1]
 
-no_of_docs = len(tf_in_docs)
-idf = {}
-for key in df:
-    idf[key] = math.log(no_of_docs/df[key])
+    tf_in_docs = {}
+    tf_idf = {}
+    df = defaultdict(int)
 
-for doc in tf_in_docs:
-    t = tf_in_docs[doc]
-    tf_idf[doc] = {}
-    for word in t:
-        tf_idf[doc][word] = t[word] * idf[word]
+    tokenizer = RegexpTokenizer(r'\w+')
 
-pickleDictionary(tf_idf,'tf_idf.txt')
-pickleDictionary(idf,'idf.txt')
+    for file in os.listdir(input_dir):
+        if file.endswith(".txt"):
+            index_doc(file)
+
+    no_of_docs = len(tf_in_docs)
+    idf = {}
+    for key in df:
+        idf[key] = math.log(no_of_docs/df[key])
+
+    for doc in tf_in_docs:
+        t = tf_in_docs[doc]
+        tf_idf[doc] = {}
+        for word in t:
+            tf_idf[doc][word] = t[word] * idf[word]
+
+    pickleDictionary(tf_idf,'tf_idf.txt')
+    pickleDictionary(idf,'idf.txt')

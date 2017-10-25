@@ -6,10 +6,6 @@ import cPickle
 
 THRESHOLD = 0.8
 
-query = raw_input("Enter a query\n  ")
-
-terms = query.split()
-
 def unpickleDictionary(file):
     with open(file,'rb') as f:
         retrievedDict = cPickle.load(f)
@@ -41,9 +37,13 @@ def reweight(terms, q):
                 q_dash[terms[j]] += q[terms[i]]*sim
     return q_dash
 
-idf = unpickleDictionary('idf.txt')
-q = tf_idf_query(terms,idf)
-q_dash = reweight(terms,q)
+if __name__ == '__main__':
+    query = raw_input("Enter a query\n  ")
 
-print q
-print q_dash
+    terms = query.split()
+    idf = unpickleDictionary('idf.txt')
+    q = tf_idf_query(terms,idf)
+    q_dash = reweight(terms,q)
+
+    print q
+    print q_dash
